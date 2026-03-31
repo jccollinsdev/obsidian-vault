@@ -1,5 +1,13 @@
 # 200 — Knowledge
 
+How things work, tech stack, skills, and operational docs.
+
+## What's Here
+
+- `Tech-Stack.md` — complete list of tools and their status
+- `Content-Pipeline.md` — how the investment content flywheel works
+- `Video-Production.md` — Remotion/FFmpeg video workflow
+
 ## Skills Installed
 
 | Skill | Purpose |
@@ -11,32 +19,8 @@
 | github | GitHub CLI operations |
 | obsidian | Obsidian vault management |
 
-## Tools Status
+## How to Use
 
-| Tool | Status | Notes |
-|------|--------|-------|
-| FFmpeg | ✅ Working | Video editing |
-| yfinance | ✅ Working | Market data |
-| YouTube API | ❌ Pending | OAuth setup needed |
-| Whisper | ❌ Not installed | For audio transcription |
-| Remotion | ✅ Working | Animated video |
-| Gmail | ✅ Working | Via gog CLI |
-| Notion | ✅ Working | API connected |
-| GitHub | ✅ Working | CLI connected |
-
-## Remotion Video Rules
-
-- **ONE RULE:** If it looks like a slideshow, it's wrong
-- Persistent anchor element morphs across ALL scenes
-- Overlapping sequences — scenes bleed into each other
-- Varied animations per scene — never the same enter twice
-- Drawing animations for charts/lines
-- Asymmetric layouts — never centered everything
-- Discrete scenes + spring physics throughout
-
-## Obsidian Vault (2026-03-30)
-
-- **Vault:** `/home/openclaw/obsidian-vault`
-- **GitHub:** https://github.com/jccollinsdev/knowledge-base
-- **Managed by:** OpenClaw AI
-- **Config:** `~/.config/obsidian/obsidian.json`
+- `/thesis [ticker]` — generate investment thesis with live market data
+- `/model [minimax-m2.7/minimax-m2.5/minimax-m2.5-lightning]` — switch AI model
+- "make a video" — trigger video production workflow

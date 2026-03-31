@@ -1,43 +1,23 @@
 # 100 — Memory
 
-## About Sansar
+Long-term curated memory, session summaries, and daily logs.
 
-- **Name:** Sansar Karki (Josiah Collins as AI persona)
-- **Age:** 8th grader (young founder)
-- **Location:** Andover, Massachusetts
-- **Timezone:** America/New_York (EST/EDT)
-- **Email:** SansarKarki10@gmail.com
-- **Pronouns:** he/him
+## Structure
 
-## OpenClaw Setup
+- `MEMORY.md` — curated long-term memory (important decisions, context, preferences)
+- `Sessions/` — session summaries auto-saved from each conversation
+- `Daily/` — daily raw logs of what happened
 
-- **Gateway:** Running at ws://127.0.0.1:18789
-- **Workspace:** /home/openclaw/.openclaw/workspace
-- **Display:** :2 (1920x1080) — Orange Pi 5B
+## Session Summary Rules
 
-## Integrations
+After each significant conversation:
+1. Write session summary to `Sessions/YYYY-MM-DD-HHMM.md`
+2. Append key points to today's `Daily/YYYY-MM-DD.md`
+3. Update `MEMORY.md` if anything important changed
+4. Notion receives only a brief summary (dashboard layer)
 
-| Service | Status | Account |
-|---------|--------|---------|
-| Google Workspace | ✅ Working | jc.collins.dev@gmail.com |
-| Notion | ✅ Working | Bot account (API key in secrets) |
-| GitHub | ✅ Working | jccollinsdev |
-| Vercel | ✅ Working | jccollinsdev |
-| YouTube | ❌ Pending | OAuth setup needed |
+## Current Status
 
-## Preferences
-
-- **No eagle emoji** at end of messages
-- **Discrete scenes + spring animations** — preferred video style
-- **Concise responses** — no corporate filler
-
-## Video Style Preferences
-
-From demo review on 2026-03-30:
-- Discrete scenes (NOT continuous camera)
-- Spring animations throughout
-- NO PowerPoint energy
-- Overlapping transitions, morphing elements
-- Data animations (counting numbers, drawing charts)
-- Varied animations per scene — never the same enter twice
-- Audio energy matters
+- **Today:** 2026-03-31
+- **Last session:** 3:19 PM EDT — Obsidian/Notion restructure decided
+- **Pending:** YouTube API OAuth, Whisper installation
