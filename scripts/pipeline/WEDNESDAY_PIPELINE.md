@@ -165,3 +165,11 @@ AI-generated image detection working — always verify with `image` tool.
 - Oil/energy: `oil refinery real photo`
 - Markets/trading: `NYSE trading floor real photo`
 - Pharma: `Eli Lilly factory real photo`
+
+---
+
+## Key Docs
+
+- [[../../README]] — vault entry point
+- [[../../memory]] — Josiah's memory
+- [[../wednesday/2026-04-02_midweek_recap]] — today's script (example output)

@@ -49,3 +49,9 @@ Last updated: 2026-04-02
 - System prompt filed in vault/pipeline/
 - Full vault folder structure created and committed
 - Script delivery workflow set up Apr 2, 2026
+
+## Vault Structure
+- [[README]] — vault entry point
+- [[pipeline/Josiah_System_Prompt]] — my identity and rules
+- [[scripts/pipeline/WEDNESDAY_PIPELINE]] — Wednesday workflow
+- [[scripts/wednesday/2026-04-02_midweek_recap]] — today's script
