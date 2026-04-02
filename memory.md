@@ -22,7 +22,8 @@ Last updated: 2026-04-02
 - Always end scripts with standard disclaimer.
 
 ## Script Delivery Preference
-- Always put scripts in Notion FIRST, then email to sansarkarki10@gmail.com
+- Put script in Notion FIRST
+- Email ONLY the Notion link to sansarkarki10@gmail.com — NEVER paste full script text in email body
 - Notion page already exists for most content types
 - Email subject line: 📹 [Date] — [Script Type] Script
 
