@@ -1,0 +1,167 @@
+{
+  "generated_at": "2026-04-02T15:51:51.842815",
+  "video_path": "/home/openclaw/.openclaw/vault/videos/in_progress/test_dummy_20260402.json",
+  "script_path": "/home/openclaw/.openclaw/vault/scripts/wednesday/2026-04-02_midweek_recap.md",
+  "sections": [
+    {
+      "section": "1 \u2014 IRAN CEASEFIRE RALLY",
+      "start_time": 0,
+      "end_time": 0,
+      "visuals": [
+        {
+          "timestamp": 0,
+          "description": "Section opener - stock market visual",
+          "visual_type": "stock_photo",
+          "visual_idea": "Stock market trading floor with screens showing market data",
+          "keywords": [
+            "market",
+            "trading",
+            "stocks"
+          ]
+        },
+        {
+          "timestamp": 0,
+          "description": "Mid-section data point",
+          "visual_type": "chart",
+          "visual_idea": "Line chart showing relevant market movement",
+          "keywords": [
+            "data",
+            "chart",
+            "market"
+          ]
+        },
+        {
+          "timestamp": 0,
+          "description": "Section closer with key takeaway",
+          "visual_type": "article_screenshot",
+          "visual_idea": "News headline related to the topic",
+          "keywords": [
+            "news",
+            "headline",
+            "market"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "2 \u2014 OIL SHOCK REVERSAL",
+      "start_time": 3.56,
+      "end_time": 4.96,
+      "visuals": [
+        {
+          "timestamp": 3.56,
+          "description": "\"You\"",
+          "visual_type": "stock_photo",
+          "visual_idea": "Oil barrels or energy-related imagery",
+          "keywords": [
+            "oil",
+            "energy",
+            "petroleum"
+          ]
+        },
+        {
+          "timestamp": 3.56,
+          "description": "\"You\"",
+          "visual_type": "stock_photo",
+          "visual_idea": "Oil barrels or energy-related imagery",
+          "keywords": [
+            "oil",
+            "energy",
+            "petroleum"
+          ]
+        },
+        {
+          "timestamp": 3.56,
+          "description": "\"You\"",
+          "visual_type": "stock_photo",
+          "visual_idea": "Oil barrels or energy-related imagery",
+          "keywords": [
+            "oil",
+            "energy",
+            "petroleum"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "3 \u2014 SPACEX IPO FILING",
+      "start_time": 0,
+      "end_time": 0,
+      "visuals": [
+        {
+          "timestamp": 0,
+          "description": "Section opener - stock market visual",
+          "visual_type": "stock_photo",
+          "visual_idea": "Stock market trading floor with screens showing market data",
+          "keywords": [
+            "market",
+            "trading",
+            "stocks"
+          ]
+        },
+        {
+          "timestamp": 0,
+          "description": "Mid-section data point",
+          "visual_type": "chart",
+          "visual_idea": "Line chart showing relevant market movement",
+          "keywords": [
+            "data",
+            "chart",
+            "market"
+          ]
+        },
+        {
+          "timestamp": 0,
+          "description": "Section closer with key takeaway",
+          "visual_type": "article_screenshot",
+          "visual_idea": "News headline related to the topic",
+          "keywords": [
+            "news",
+            "headline",
+            "market"
+          ]
+        }
+      ]
+    },
+    {
+      "section": "4 \u2014 ELI LILLY GLP-1 PILL APPROVED",
+      "start_time": 0,
+      "end_time": 0,
+      "visuals": [
+        {
+          "timestamp": 0,
+          "description": "Section opener - stock market visual",
+          "visual_type": "stock_photo",
+          "visual_idea": "Stock market trading floor with screens showing market data",
+          "keywords": [
+            "market",
+            "trading",
+            "stocks"
+          ]
+        },
+        {
+          "timestamp": 0,
+          "description": "Mid-section data point",
+          "visual_type": "chart",
+          "visual_idea": "Line chart showing relevant market movement",
+          "keywords": [
+            "data",
+            "chart",
+            "market"
+          ]
+        },
+        {
+          "timestamp": 0,
+          "description": "Section closer with key takeaway",
+          "visual_type": "article_screenshot",
+          "visual_idea": "News headline related to the topic",
+          "keywords": [
+            "news",
+            "headline",
+            "market"
+          ]
+        }
+      ]
+    }
+  ]
+}

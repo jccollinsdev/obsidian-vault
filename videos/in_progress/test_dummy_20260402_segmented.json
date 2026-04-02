@@ -1,0 +1,48 @@
+{
+  "video_path": "/home/openclaw/.openclaw/vault/videos/in_progress/test_dummy_20260402.json",
+  "script_path": "/home/openclaw/.openclaw/vault/scripts/wednesday/2026-04-02_midweek_recap.md",
+  "generated_at": "2026-04-02T15:51:51.842815",
+  "sections": [
+    {
+      "name": "1 \u2014 IRAN CEASEFIRE RALLY",
+      "word_count": 0,
+      "start_time": 0,
+      "end_time": 0,
+      "duration": 0,
+      "sample_text": "..."
+    },
+    {
+      "name": "2 \u2014 OIL SHOCK REVERSAL",
+      "word_count": 1,
+      "start_time": 3.56,
+      "end_time": 4.96,
+      "duration": 1.4,
+      "sample_text": "You..."
+    },
+    {
+      "name": "3 \u2014 SPACEX IPO FILING",
+      "word_count": 0,
+      "start_time": 0,
+      "end_time": 0,
+      "duration": 0,
+      "sample_text": "..."
+    },
+    {
+      "name": "4 \u2014 ELI LILLY GLP-1 PILL APPROVED",
+      "word_count": 0,
+      "start_time": 0,
+      "end_time": 0,
+      "duration": 0,
+      "sample_text": "..."
+    }
+  ],
+  "words": [
+    {
+      "word": "You",
+      "start": 3.56,
+      "end": 4.96,
+      "probability": 0.07399871945381165,
+      "section": "2 \u2014 OIL SHOCK REVERSAL"
+    }
+  ]
+}
