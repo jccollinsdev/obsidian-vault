@@ -11,7 +11,8 @@ Last updated: 2026-04-02
 — none yet —
 
 ## Pending
-— none yet —
+- **Fri Apr 3:** Build Friday pipeline from scratch (pipeline spec + script). Same structure as Wednesday pipeline but Friday "Week in Review" format.
+- **Mon Apr 6:** Monday thesis video — Sansar will pick the stock/idea. Need a thesis brief from him first.
 
 ## Script Formatting Rules (locked in Apr 2, 2026)
 - Section labels: NO numbers — use [SECTION: TOPIC NAME] not [SECTION: 1 — TOPIC NAME]

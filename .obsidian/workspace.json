@@ -49,7 +49,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "content pipeline",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -70,7 +70,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -150,13 +151,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2026-04-02.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 2026-04-02"
+              "title": "Outline"
             }
           }
         ]
@@ -177,10 +177,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "3439951e769738a9",
+  "active": "aa235814fc7a8796",
   "lastOpenFiles": [
-    "Untitled.base",
+    "content pipeline.md",
+    "scripts/pipeline/remotion-video/node_modules/source-map/README.md",
+    "scripts/pipeline/WEDNESDAY_PIPELINE.md",
     "2026-04-02.md",
+    "Untitled.base",
     "Untitled.canvas",
     "scripts/pipeline/remotion-video/node_modules/acorn/CHANGELOG.md"
   ]
