@@ -29,4 +29,4 @@ _(none yet)_
 | 2026-04-02 | Unsplash API | ➡️ Replaced | Replaced with Bing Image Scraper — free, no API key, works reliably |
 | 2026-04-02 | Whisper | ✅ Done - Installed natively via apt | |
 | 2026-04-02 | FFmpeg | ✅ Done - Installed natively via Ubuntu package | |
-| 2026-04-02 | reportlab (Python) | ⏳ Pending | |
+| 2026-04-02 | reportlab (Python) | ✅ Done - Installed via pip --break-system-packages | |
