@@ -19,3 +19,13 @@ _(none yet)_
 ## Pending
 - Full tool stack setup in progress
 
+
+## Tool Setup Log (continued)
+| Date | Tool | Status | Notes |
+|------|------|--------|-------|
+| 2026-04-02 | Crawl4AI | ✅ Done | pip install, playwright chromium installed. Python library. No API key needed. |
+| 2026-04-02 | Pexels API | ⏳ Pending | |
+| 2026-04-02 | Unsplash API | ⏳ Pending | |
+| 2026-04-02 | Whisper (Docker) | ⏳ Pending | |
+| 2026-04-02 | FFmpeg (Docker) | ⏳ Pending | |
+| 2026-04-02 | reportlab (Python) | ⏳ Pending | |
