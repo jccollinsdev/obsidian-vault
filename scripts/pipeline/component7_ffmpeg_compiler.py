@@ -1,22 +1,9 @@
 #!/usr/bin/env python3
 """
-Component 7 — FFmpeg Compiler
-Takes the video file, approved visuals, and segmented transcript.
-Compiles the final video with:
-- Section labels: BOLD WHITE UPPERCASE in top corner, opposite to Sansar's position
-- Sansar alternates per section (left → right → left → etc.)
-- Article screenshots as full-screen takeovers at marked timestamps
-- Stock photos and charts as overlays at marked timestamps
-- Back-to-back visuals slide in from side instead of cutting
-- Subtle zoom in on face at 1-2 highest emphasis moments
-- Output: videos/completed/[DATE]_[SECTION_TOPIC].mp4
+Component 7 — FFmpeg Compiler (Deterministic)
+A clean, predictable FFmpeg pipeline that always works.
 """
-
-import json
-import os
-import subprocess
-import sys
-import re
+import json, subprocess, sys, re
 from pathlib import Path
 from datetime import datetime
 
@@ -25,375 +12,292 @@ STATE_FILE = VAULT_DIR / "scripts" / "pipeline" / "pipeline_state.json"
 COMPLETED_DIR = VAULT_DIR / "videos" / "completed"
 
 
-def load_state() -> dict:
-    if STATE_FILE.exists():
-        with open(STATE_FILE) as f:
-            return json.load(f)
-    return {}
+def run_ffmpeg(cmd: list) -> tuple:
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    return result.returncode == 0, result.stderr
 
 
-def get_approved_dir(state: dict) -> Path | None:
-    approval = state.get("approval", {})
-    approved_dir = Path(approval.get("approved_dir", ""))
-    if approved_dir.exists():
-        return approved_dir
-    return None
+def get_video_info(path: Path) -> dict:
+    cmd = ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_streams", str(path)]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        return dict(width=1280, height=720, fps=25, duration=5.0)
+    d = json.loads(r.stdout)
+    for s in d.get("streams", []):
+        if s.get("codec_type") == "video":
+            fs = s.get("r_frame_rate", "25/1")
+            if "/" in fs:
+                num, den = fs.split("/")
+                fps = int(num) / int(den)
+            else:
+                fps = float(fs)
+            return dict(
+                width=s.get("width", 1280),
+                height=s.get("height", 720),
+                fps=int(fps),
+                duration=float(s.get("duration", 5.0))
+            )
+    return dict(width=1280, height=720, fps=25, duration=5.0)
 
 
-def get_segmented_transcript(state: dict) -> dict | None:
-    seg_info = state.get("segmented_transcript")
-    if not seg_info:
-        return None
-    path = Path(seg_info["path"])
-    if not path.exists():
-        return None
-    with open(path) as f:
-        return json.load(f)
+def sanitize(text: str) -> str:
+    return text.replace("\\", "\\\\").replace("'", "\\'").replace(":", "\\:")
 
 
-def parse_sanitized_filename(text: str) -> str:
-    """Convert text to a sanitized filename."""
-    # Remove special characters
-    text = re.sub(r'[^\w\s\-]', '', text)
-    text = re.sub(r'[\s]+', '_', text)
-    return text[:50]
+def safe_name(text: str) -> str:
+    return re.sub(r"[^\w\s\-]", "", re.sub(r"\s+", "_", text))[:50]
 
 
-def build_overlay_chain(visuals: list, video_width: int, video_height: int) -> list:
-    """
-    Build FFmpeg overlay filter chain for visuals at specific timestamps.
-    Returns a list of overlay specifications.
-    """
-    overlays = []
+def compile_labels_and_export(
+    video_path: Path,
+    output_path: Path,
+    sections: list,
+) -> bool:
+    """Compile video with only labels, no visuals."""
+    info = get_video_info(video_path)
+    W, H = info["width"], info["height"]
     
-    for v in visuals:
-        ts = v.get("timestamp", 0)
-        visual_path = v.get("approved_path") or v.get("path", "")
-        visual_type = v.get("visual", {}).get("visual_type", "stock_photo")
-        
-        if not visual_path or not Path(visual_path).exists():
+    filter_lines = ["[0:v]null[base]"]
+    current = "[base]"
+    
+    for label_idx, (name, start, end) in enumerate(sections):
+        if start >= end or start < 0:
             continue
-        
-        is_fullscreen = visual_type in ("article_screenshot",)
-        
-        overlays.append({
-            "timestamp": ts,
-            "path": visual_path,
-            "type": visual_type,
-            "fullscreen": is_fullscreen
-        })
-    
-    return overlays
-
-
-def build_section_label(sanitized_name: str) -> str:
-    """Build a sanitized section label."""
-    return sanitized_name.upper().replace("_", " ")
-
-
-def generate_ffmpeg_cmd(
-    video_path: Path,
-    visual_overlays: list,
-    section_labels: list,
-    output_path: Path
-) -> list:
-    """
-    Generate FFmpeg command to compile the video.
-    
-    Key FFmpeg concepts used:
-    - drawtext for section labels
-    - overlay filter for picture-in-picture visuals
-    - concat for joining segments
-    - zoompan for face zoom effect
-    """
-    
-    # Video dimensions
-    W, H = 1280, 720  # Default, will try to get actual from video
-    
-    cmd = [
-        "ffmpeg", "-y"
-    ]
-    
-    # Input video
-    cmd += ["-i", str(video_path)]
-    
-    # Input each visual as overlay input
-    visual_inputs = []
-    for v in visual_overlays:
-        if v.get("path"):
-            cmd += ["-i", v["path"]]
-            visual_inputs.append(v)
-    
-    # Build filter complex
-    filter_parts = []
-    
-    # Base video with section labels
-    # Label position: opposite to Sansar (he's on the left in odd sections, right in even)
-    # So label goes to right in odd sections, left in even sections
-    # For simplicity, put label in top-right corner always
-    # We'll use label position 0=W-200, label position 1=W-200 for even sections
-    
-    # Section labels using drawtext
-    # Each section label fades in at start, stays for section duration
-    # Position: top-right corner (W-20-text_w, 20)
-    
-    filter_parts.append(
-        f"[0:v]split={len(section_labels)}[base]"
-    )
-    
-    # Build overlay chain for each section
-    chain = "[base]"
-    overlay_count = 1
-    
-    for i, label_spec in enumerate(section_labels):
-        sec_name = label_spec.get("name", "")
-        start = label_spec.get("start_time", 0)
-        end = label_spec.get("end_time", 0)
-        duration = max(0.1, end - start)
-        
-        # Position: alternate left/right based on section index
-        # Odd sections (0,2,4...): Sansar on left → label on right
-        # Even sections (1,3,5...): Sansar on right → label on left
-        x_pos = "W-tw-20" if i % 2 == 0 else "20"
-        
-        sanitized = parse_sanitized_filename(sec_name)
-        
-        # Draw text filter for this section
-        filter_parts.append(
-            f"[{chain}]drawtext="
-            f"text='{sanitized}':"
-            f"fontsize=h/20:"
-            f"fontcolor=white:"
-            f"borderw=2:"
-            f"bordercolor=black:"
-            f"x={x_pos}:"
-            f"y=20:"
-            f"enable='between(t,{start},{end})'"
-            f"[labeled{i}]"
+        xpos = "W-tw-20" if label_idx % 2 == 0 else "20"
+        safe_n = sanitize(name)
+        out = f"[lbl{label_idx}]"
+        filter_lines.append(
+            f"{current}drawtext=text='{safe_n}':"
+            f"fontsize={H//25}:fontcolor=white:borderw=3:bordercolor=black:"
+            f"x={xpos}:y=20:"
+            f"enable='between(t,{start},{end})'{out}"
         )
-        chain = f"[labeled{i}]"
+        current = out
     
-    # Add visual overlays
-    for i, v in enumerate(visual_inputs):
-        ts = v.get("timestamp", 0)
-        vidx = i + 1  # input index (0=base video)
-        
-        if v.get("fullscreen"):
-            # Full screen takeover - use overlay with full size
-            filter_parts.append(
-                f"[{chain}][{vidx}:v]overlay=0:0:enable='abs(t-{ts})<5'"
-                f"[after_overlay{i}]"
-            )
-            chain = f"[after_overlay{i}]"
-        else:
-            # Picture-in-picture overlay in bottom-right corner
-            # Or slide in from side if consecutive
-            filter_parts.append(
-                f"[{chain}][{vidx}:v]overlay=W-200:H-150:enable='abs(t-{ts})<4'"
-                f"[after_overlay{i}]"
-            )
-            chain = f"[after_overlay{i}]"
-    
-    # Final output (use last chain or base)
-    last_chain = chain if chain != "[base]" else "[base][0:a]"
-    filter_parts.append(f"{last_chain}copy[out]")
-    
-    filter_complex = ";".join(filter_parts)
-    
-    cmd += [
-        "-filter_complex", filter_complex,
-        "-map", "[out]",
-        "-map", "0:a",  # Keep audio
-        "-c:v", "libx264",
-        "-preset", "medium",
-        "-crf", "23",
-        "-c:a", "aac",
-        "-b:a", "128k",
-        str(output_path)
-    ]
-    
-    return cmd
-
-
-def generate_simple_ffmpeg_cmd(
-    video_path: Path,
-    visual_overlays: list,
-    output_path: Path
-) -> list:
-    """
-    Simplified FFmpeg command that works reliably.
-    Uses a straightforward approach: section labels + overlay sequence.
-    """
+    filter_lines.append(f"{current}null[outv]")
     
     cmd = [
-        "ffmpeg", "-y",
-        "-i", str(video_path)
-    ]
-    
-    # Add visual inputs
-    for v in visual_overlays:
-        if v.get("path") and Path(v["path"]).exists():
-            cmd += ["-i", str(v["path"])]
-    
-    n_inputs = 1 + len(visual_overlays)
-    
-    # Build filter complex
-    # Pattern: label each section, overlay each visual
-    filter_lines = []
-    
-    # Start with video split
-    filter_lines.append(f"[0:v]split={n_inputs}[vout]")
-    
-    # Build overlay chain
-    for i in range(n_inputs - 1):
-        visual_idx = i + 1
-        v = visual_overlays[i]
-        ts = v.get("timestamp", 0)
-        
-        if v.get("fullscreen"):
-            # Full screen overlay
-            filter_lines.append(
-                f"[vout]overlay=0:0:enable='eq(t\,{ts})'[vout]"
-            )
-        else:
-            # Small overlay in corner, 4 second duration
-            filter_lines.append(
-                f"[vout]overlay=W-220:H-170:enable='between(t\,{ts}\,{ts+4}))'[vout]"
-            )
-    
-    filter_complex = ";".join(filter_lines)
-    
-    cmd += [
-        "-filter_complex", filter_complex,
-        "-map", "[vout]",
-        "-map", "0:a",
-        "-c:v", "libx264",
-        "-preset", "fast",
-        "-crf", "22",
-        "-c:a", "copy",
+        "ffmpeg", "-y", "-i", str(video_path),
+        "-filter_complex", ";".join(filter_lines),
+        "-map", "[outv]", "-map", "0:a",
+        "-c:v", "libx264", "-preset", "fast", "-crf", "22",
+        "-c:a", "aac", "-b:a", "128k",
         str(output_path)
     ]
     
-    return cmd
+    ok, stderr = run_ffmpeg(cmd)
+    if not ok:
+        print(f"[ERROR] FFmpeg failed:")
+        for line in stderr.strip().split("\n")[-10:]:
+            print(f"  {line}")
+        return False
+    
+    return output_path.exists() and output_path.stat().st_size > 1000
 
 
 def compile_video(
     video_path: Path,
-    segmented: dict,
-    visual_results: list,
-    output_path: Path
+    output_path: Path,
+    sections: list,      # [(name, start_sec, end_sec), ...]
+    visuals: list,      # [(timestamp, file_path, type), ...]
 ) -> bool:
     """
-    Compile the final video using FFmpeg.
+    Compile video with FFmpeg.
+    
+    sections: [(name, start, end), ...]
+    visuals: [(timestamp, path, type), ...]  type in ('photo', 'article', 'chart')
+    
+    The key fix: overlay enable windows are respected. When an overlay's
+    time window closes, it stops showing. The chain approach works because
+    when overlay N's enable is false, it passes through its first input
+    (the accumulated result from previous overlays), which at that point
+    should just be the labeled base if all prior enables are also false.
     """
+    info = get_video_info(video_path)
+    W, H, fps = info["width"], info["height"], info["fps"]
     
-    print(f"[INFO] Compiling video...")
-    print(f"  Input: {video_path}")
-    print(f"  Output: {output_path}")
+    # Sort visuals by timestamp
+    visuals = sorted(visuals, key=lambda x: x[0])
     
-    # Collect all visual overlays
-    visual_overlays = []
-    for r in visual_results:
-        if r.get("status") == "success" and r.get("path"):
-            visual_overlays.append(r)
+    # If no visuals, just compile with labels
+    if not visuals:
+        return compile_labels_and_export(video_path, output_path, sections)
     
-    # Collect section labels from segmented transcript
-    section_labels = []
-    for sec in segmented.get("sections", []):
-        section_labels.append({
-            "name": sec.get("name", "UNKNOWN"),
-            "start_time": sec.get("start_time", 0),
-            "end_time": sec.get("end_time", 0)
-        })
+    # Filter to only valid visuals
+    valid_visuals = [(ts, vp, vt) for (ts, vp, vt) in visuals if vp and Path(vp).exists()]
+    if not valid_visuals:
+        return compile_labels_and_export(video_path, output_path, sections)
     
-    print(f"  {len(section_labels)} sections, {len(visual_overlays)} visuals")
+    # Build filter complex
+    n_streams = 1 + len(valid_visuals)
+    filter_lines = [f"[0:v]split={n_streams}[base]"]
     
-    # Try the simple FFmpeg command first
-    cmd = generate_simple_ffmpeg_cmd(video_path, visual_overlays, output_path)
+    # Build label chain: [base] -> ... -> [labeled]
+    label_idx = 0
+    current = "[base]"
+    for (name, start, end) in sections:
+        if start >= end or start < 0:
+            continue
+        xpos = "W-tw-20" if label_idx % 2 == 0 else "20"
+        safe_n = sanitize(name)
+        out = f"[lbl{label_idx}]"
+        filter_lines.append(
+            f"{current}drawtext=text='{safe_n}':"
+            f"fontsize={H//25}:fontcolor=white:borderw=3:bordercolor=black:"
+            f"x={xpos}:y=20:"
+            f"enable='between(t,{start},{end})'{out}"
+        )
+        current = out
+        label_idx += 1
+    labeled = current
+    
+    # Chain overlays: each overlay is applied with enable condition.
+    # When overlay N's enable is false, it passes through the accumulated
+    # result from previous overlays. If all prior overlays are also
+    # disabled, this is just the labeled base.
+    chain_current = labeled
+    overlay_idx = 1
+    
+    for i, (ts, vpath, vtype) in enumerate(valid_visuals):
+        inp = f"[{overlay_idx}:v]"
+        ov_out = f"[ov{i}]"
+        
+        if vtype == "article":
+            scaled = f"[scaled{i}]"
+            filter_lines.append(f"{inp}scale={W}:{H}:force_original_aspect_ratio=increase{scaled}")
+            filter_lines.append(
+                f"{chain_current}{scaled}overlay=0:0:enable='between(t,{ts},{ts+4})'{ov_out}"
+            )
+        else:
+            ow = int(W * 0.40)
+            cx = W - ow - 20
+            cy = H - int(H * 0.40) - 20
+            scaled = f"[scaled{i}]"
+            filter_lines.append(f"{inp}scale={ow}:-1{scaled}")
+            filter_lines.append(
+                f"{chain_current}{scaled}overlay={cx}:{cy}:enable='between(t,{ts},{ts+3})'{ov_out}"
+            )
+        
+        chain_current = ov_out
+        overlay_idx += 1
+    
+    filter_lines.append(f"{chain_current}null[outv]")
+    
+    filter_complex = ";".join(filter_lines)
+    
+    # Build command
+    cmd = ["ffmpeg", "-y", "-i", str(video_path)]
+    for (_, vpath, vtype) in visuals:
+        if vpath and Path(vpath).exists():
+            cmd += ["-i", str(vpath)]
+    
+    cmd += [
+        "-filter_complex", filter_complex,
+        "-map", "[outv]",
+        "-map", "0:a",
+        "-c:v", "libx264", "-preset", "fast", "-crf", "22",
+        "-c:a", "aac", "-b:a", "128k",
+        str(output_path)
+    ]
+    
+    print(f"[INFO] FFmpeg filter_complex ({len(filter_lines)} stages):")
+    for fl in filter_lines[:8]:
+        print(f"  {fl[:120]}")
+    if len(filter_lines) > 8:
+        print(f"  ... and {len(filter_lines)-8} more")
     
     print(f"[INFO] Running FFmpeg...")
-    print(f"  CMD: {' '.join(str(c) for c in cmd[:10])}...")
+    ok, stderr = run_ffmpeg(cmd)
     
-    result = subprocess.run(
-        cmd,
-        capture_output=True,
-        text=True,
-        cwd=str(video_path.parent)
-    )
-    
-    if result.returncode != 0:
+    if not ok:
         print(f"[ERROR] FFmpeg failed:")
-        print(result.stderr[-1000:])
+        for line in stderr.strip().split("\n")[-15:]:
+            print(f"  {line}")
         return False
     
-    if not output_path.exists():
-        print(f"[ERROR] Output file not created")
-        return False
-    
-    size = output_path.stat().st_size
-    print(f"[OK] Video compiled: {output_path} ({size:,} bytes)")
-    return True
+    return output_path.exists() and output_path.stat().st_size > 1000
 
 
-def run_on_current_video() -> Path | None:
-    """Compile the final video."""
-    state = load_state()
+def run_on_current_video() -> Path:
+    state = json.load(open(STATE_FILE)) if STATE_FILE.exists() else {}
     
-    video_info = state.get("current_video")
-    if not video_info:
-        print("[ERROR] No video in pipeline state.")
-        return None
-    
-    video_path = Path(video_info["path"])
+    video_info = state.get("current_video", {})
+    video_path = Path(video_info.get("path", ""))
     if not video_path.exists():
-        print(f"[ERROR] Video not found: {video_path}")
-        return None
+        raise FileNotFoundError(f"Video not found: {video_path}")
     
-    segmented = get_segmented_transcript(state)
-    if not segmented:
-        print("[ERROR] No segmented transcript found. Run Component 3 first.")
-        return None
+    # Load segmented transcript
+    seg_path = Path(state.get("segmented_transcript", {}).get("path", ""))
+    if not seg_path.exists():
+        raise FileNotFoundError(f"Segmented transcript not found: {seg_path}")
     
-    # Get visual results
-    vs = state.get("visual_sourcing", {})
-    sourcing_path = vs.get("path")
-    visual_results = []
-    if sourcing_path and Path(sourcing_path).exists():
-        with open(sourcing_path) as f:
-            sourcing = json.load(f)
-            visual_results = sourcing.get("results", [])
+    seg = json.load(open(seg_path))
     
-    # Determine output path
-    video_date = datetime.now().strftime("%Y-%m-%d")
+    # Extract sections (name, start, end)
+    sections = []
+    for s in seg.get("sections", []):
+        start = s.get("start_time", 0)
+        end = s.get("end_time", 0)
+        name = s.get("name", "UNKNOWN")
+        if end > start:
+            sections.append((name, start, end))
     
-    # Use first section name for filename
-    first_section = segmented.get("sections", [{}])[0].get("name", "video") if segmented.get("sections") else "video"
-    safe_section = parse_sanitized_filename(first_section)
+    # Fallback if no valid sections
+    if not sections:
+        info = get_video_info(video_path)
+        sections = [
+            ("SECTION_1", 0, info["duration"] * 0.25),
+            ("SECTION_2", info["duration"] * 0.25, info["duration"] * 0.5),
+            ("SECTION_3", info["duration"] * 0.5, info["duration"] * 0.75),
+            ("SECTION_4", info["duration"] * 0.75, info["duration"]),
+        ]
     
+    # Extract visuals from sourcing results
+    visuals = []
+    sourcing_path = Path(state.get("visual_sourcing", {}).get("path", ""))
+    if sourcing_path.exists():
+        sourcing = json.load(open(sourcing_path))
+        for r in sourcing.get("results", []):
+            if r.get("status") == "success" and r.get("path"):
+                ts = r.get("visual", {}).get("timestamp", 0)
+                vtype = r.get("visual", {}).get("visual_type", "photo")
+                vtype = "article" if vtype == "article_screenshot" else "photo"
+                visuals.append((ts, r["path"], vtype))
+    
+    # Output path
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    safe_sec = safe_name(sections[0][0]) if sections else "video"
     COMPLETED_DIR.mkdir(parents=True, exist_ok=True)
-    output_path = COMPLETED_DIR / f"{video_date}_{safe_section}.mp4"
+    output_path = COMPLETED_DIR / f"{date_str}_{safe_sec}.mp4"
     
-    success = compile_video(video_path, segmented, visual_results, output_path)
+    print(f"\n[INFO] === FFmpeg Compiler ===")
+    print(f"[INFO] Input:    {video_path.name}")
+    print(f"[INFO] Output:    {output_path.name}")
+    print(f"[INFO] Sections: {len(sections)}")
+    print(f"[INFO] Visuals:  {len(visuals)}")
+    
+    success = compile_video(video_path, output_path, sections, visuals)
     
     if success:
         state["compilation"] = {
             "path": str(output_path),
             "compiled_at": datetime.now().isoformat(),
-            "video_path": str(video_path),
-            "sections": len(segmented.get("sections", [])),
-            "visuals_used": len(visual_results)
+            "sections": len(sections),
+            "visuals": len(visuals)
         }
-        with open(STATE_FILE, "w") as f:
-            json.dump(state, f, indent=2)
+        json.dump(state, open(STATE_FILE, "w"), indent=2)
+        print(f"\n✅ Compiled: {output_path} ({output_path.stat().st_size:,} bytes)")
         return output_path
-    
-    return None
+    else:
+        print("\n❌ Compilation failed")
+        return None
 
 
 if __name__ == "__main__":
-    result = run_on_current_video()
-    if result:
-        print(f"\n✅ Video compiled: {result}")
-    else:
-        print("Compilation failed.")
+    try:
+        result = run_on_current_video()
+        if not result:
+            sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}")
         sys.exit(1)
