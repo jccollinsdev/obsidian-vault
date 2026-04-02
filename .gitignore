@@ -1,0 +1,5 @@
+# Remotion cache and build artifacts
+remotion-video/node_modules/.cache/
+remotion-video/node_modules/.remotion/
+.vscode/
+*.log
