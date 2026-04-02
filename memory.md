@@ -27,6 +27,22 @@ Last updated: 2026-04-02
 - Notion page already exists for most content types
 - Email subject line: 📹 [Date] — [Script Type] Script
 
+## Post-Recording Video Pipeline (built Apr 2, 2026)
+- Location: vault/scripts/pipeline/
+- Orchestrator: run_pipeline.py (runs all 7 components in sequence)
+- Components:
+  1. Email Monitor → watches Gmail for recording emails, downloads video
+  2. Whisper Runner → transcribes with word-level timestamps
+  3. Topic Segmenter → maps transcript words to script [SECTION: X] labels
+  4. Visual Proposer → proposes 3 visuals per section (article/chart/photo)
+  5. Visual Sourcer → Crawl4AI for articles/charts, Bing Images for stock photos
+  6. Telegram Approval Gate → sends photos to Sansar for approval
+  7. FFmpeg Compiler → compiles final video with labels, overlays, zoom effects
+- Usage: `python3 scripts/pipeline/run_pipeline.py --dry-run` (test) or `--component N` to start from N
+- State file: scripts/pipeline/pipeline_state.json (shared between components)
+- OAuth: uses gog refresh token for Gmail API (stored at scripts/pipeline/.gog_token_cache.json)
+- Telegram bot: AIJosiah_bot (token:8744451750:AAHXNX2UIeVJ7dsGwOp_HnJTKXw4h989CSE)
+
 ## Notes
 - First boot complete. Tools set up. Vault initialized.
 - Pipeline spec received and filed in vault/pipeline/
