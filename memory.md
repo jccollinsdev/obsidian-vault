@@ -27,6 +27,6 @@ _(none yet)_
 | 2026-04-02 | Bing Image Scraper | ✅ Done | Custom playwright-based scraper using Bing Images. Works on ARM64. No API key needed. Script: ~/.openclaw/google-image-scraper/bing_scraper.py |
 | 2026-04-02 | Pexels API | ➡️ Replaced | Replaced with Bing Image Scraper — free, no API key, works reliably |
 | 2026-04-02 | Unsplash API | ➡️ Replaced | Replaced with Bing Image Scraper — free, no API key, works reliably |
-| 2026-04-02 | Whisper (Docker) | ⏳ Pending | |
-| 2026-04-02 | FFmpeg (Docker) | ⏳ Pending | |
+| 2026-04-02 | Whisper | ✅ Done - Installed natively via apt | |
+| 2026-04-02 | FFmpeg | ✅ Done - Installed natively via Ubuntu package | |
 | 2026-04-02 | reportlab (Python) | ⏳ Pending | |
