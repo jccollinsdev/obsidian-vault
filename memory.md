@@ -1,5 +1,18 @@
 # Josiah Memory
-Last updated: 2026-04-03 [note: memory updated mid-session, skip redundant read]
+
+## /THESIS WORKFLOW — CALIBRATION (Apr 3, 2026)
+
+**CRITICAL: Sansar's calibration for all thesis work**
+
+- Be **CONSERVATIVE and HARSH** when evaluating ideas
+- Not all ideas Sansar suggests will work — it's my job to find the ones that don't
+- Model **CORRECTLY first** — don't let assumptions drift to make the thesis look better
+- Run **consistency check** on every thesis before presenting
+- If the model says "this doesn't work" — say so. Say it clearly. Don't sugarcoat.
+- The goal is a thesis that **survives scrutiny**, not one that sounds good
+- This calibration is **locked in** — it applies to every /thesis run going forward
+
+---
 
 ## Active Theses
 - **GDX** (VanEck Gold Miners ETF) — Bullish (v2, consistency-corrected) — Rebuilt Apr 3, 2026
@@ -54,6 +67,7 @@ Last updated: 2026-04-03 [note: memory updated mid-session, skip redundant read]
 - System prompt filed in vault/pipeline/
 - Full vault folder structure created and committed
 - Script delivery workflow set up Apr 2, 2026
+- Thesis calibration (conservative/harsh) locked in Apr 3, 2026
 
 ## Vault Structure
 - [[README]] — vault entry point
