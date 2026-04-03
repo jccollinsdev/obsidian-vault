@@ -9,6 +9,7 @@
 
 Every `/thesis [idea]` run follows this exact sequence:
 
+0. **Devil's Advocate** ← NEW: state the 3 strongest reasons the thesis is wrong
 1. Pull live data
 2. Run Quality of Earnings check
 3. Build DCF model
@@ -30,6 +31,36 @@ Every `/thesis [idea]` run follows this exact sequence:
 ---
 
 ## Step-by-Step Process
+
+### Step 0 — Devil's Advocate (MANDATORY — do this FIRST)
+
+Before pulling any data or building any model, stop and argue against yourself. 
+
+Write out the **three strongest specific, quantified reasons** this thesis is wrong. Not generic risks like "geopolitical uncertainty" — concrete, quantified challenges that if true, would break the thesis.
+
+Format:
+```
+DEVIL'S ADVOCATE — [TICKER]
+
+Argument 1: [Name it clearly]
+- What specifically would have to be true for this to destroy the thesis?
+- What is the quantified impact? (e.g., "GDX falls to $61, -35% from entry")
+- What probability would you assign to this being the actual outcome?
+
+Argument 2: [Name it clearly]
+- ...same format
+
+Argument 3: [Name it clearly]
+- ...same format
+```
+
+The rest of the model (DCF, NAV, scenarios, risk matrix) must have a section that **explicitly addresses each argument**. Not just a nod — a specific response that either:
+(a) disproves it with data, or
+(b) acknowledges it is valid but quantifies why the base case still wins
+
+**If an argument cannot be rebutted with data, the thesis may not be worth making.**
+
+---
 
 ### Step 1 — Data Pull
 
@@ -196,4 +227,22 @@ If the consistency check reveals the thesis doesn't hold up:
 
 ---
 
-*This document is locked in as of April 3, 2026.*
+## WRITING STYLE RULES — NON-NEGOTIABLE (added Apr 3, 2026)
+
+These apply to every thesis output — scripts, PDFs, Notion pages, research notes.
+
+| Rule | What it means |
+|------|---------------|
+| **Goldman/JPMorgan sector note voice** | Write like an institutional research note, not a newsletter or blog post |
+| **Every sentence must contain a number, source, or specific claim** | No filler sentences. If a sentence doesn't move the analysis forward with data, cut it |
+| **No rhetorical questions** | State the point directly |
+| **No "here's what most investors miss"** | Banned phrases: "the real story", "what most investors don't see", "the truth about", anything that reads like a YouTube thumbnail |
+| **Inverted pyramid** | Lead every section with the conclusion first, then support it. Reader knows the point immediately |
+| **Explicit hedge language** | "We estimate", "subject to", "based on", "assuming" — be precise about what is modeled vs. assumed |
+| **No exclamation points** | Zero. None. Ever |
+| **Ban the word "moment"** | Gold is not "having a moment" — state the actual catalyst |
+| **Retail newsletter filter** | If a sentence could appear in a Seeking Alpha article or Motley Fool post, rewrite it |
+
+---
+
+*This document is locked in as of April 3, 2026. Writing style rules added Apr 3, 2026.*

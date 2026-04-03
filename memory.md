@@ -33,12 +33,23 @@
 - **Apr 3 PM:** Sansar requested full internal thesis generation prompt/pipeline documentation -- to be shared with him
 
 ## Script Formatting Rules (locked in Apr 2, 2026)
-- Section labels: NO numbers — use [SECTION: TOPIC NAME] not [SECTION: 1 — TOPIC NAME]
-- Opening line: Name specific headlines, don't be vague. Match Sansar's blog style — lead with the actual stories.
-  - ✅ "Iran ceasefire, SpaceX IPO, oil at $111, and an FDA approval that just kicked off the GLP-1 wars — it's your midweek recap and we've got a lot to cover."
-  - ❌ "So this week in the markets was basically a geopolitical roller coaster..."
+- Section labels: NO numbers -- use [SECTION: TOPIC NAME] not [SECTION: 1 -- TOPIC NAME]
+- Opening line: Name specific headlines, don't be vague. Match Sansar's blog style -- lead with the actual stories.
+  - [OBSOLETE -- See Writing Style Rules below]
 - Photos need approval. Articles and charts are auto-approved.
 - Always end scripts with standard disclaimer.
+
+## WRITING STYLE RULES -- NON-NEGOTIABLE (added Apr 3, 2026)
+All thesis outputs must follow these rules (also in THESIS_PIPELINE.md):
+- Goldman/JPMorgan institutional sector note voice -- not a newsletter
+- Every sentence: number, source, or specific claim -- no filler
+- No rhetorical questions
+- Banned phrases: "here's what most investors miss", "the real story", "the truth about", anything Seeking Alpha / Motley Fool
+- Inverted pyramid: conclusion first, then support
+- Explicit hedges: "we estimate", "subject to", "based on", "assuming"
+- Zero exclamation points
+- Ban the word "moment" -- state actual catalyst instead
+- Retail newsletter filter: rewrite if it could appear in Seeking Alpha
 
 ## Script Delivery Preference
 - Put script in Notion FIRST

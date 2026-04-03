@@ -8,11 +8,79 @@ print(f"Report Date: April 3, 2026")
 print("=" * 80)
 
 # ============================================================
-# STEP 1: DATA PULL - Market Data
+# STEP 0: DEVIL'S ADVOCATE — state the 3 strongest counter-arguments
 # ============================================================
 print("\n" + "=" * 80)
-print("STEP 1: DATA PULL")
+print("STEP 0: DEVIL'S ADVOCATE")
 print("=" * 80)
+
+devil_advocate = """
+================================================================================
+STEP 0 — DEVIL'S ADVOCATE: GDX Bullish Thesis
+================================================================================
+
+Before modeling, we must destroy the thesis we're trying to build.
+Three strongest quantified arguments against buying GDX at $94.59:
+
+--------------------------------------------------------------------------------
+ARGUMENT 1: "GDX Is NOT Undervalued — You're Paying Fair Value"
+--------------------------------------------------------------------------------
+The DCF and NAV both say GDX at $94.59 is fairly valued at current gold
+($4,651/oz). Model outputs show $94–98 fair value. There is ZERO margin of
+safety at entry. The base case 12-month target of $102–107 only represents
++8–13% upside — barely above the BUY threshold of 10%. This is a thin edge,
+not a confident position.
+
+ quantified impact: If gold simply stays flat at $4,651, GDX delivers
+ ~0–3% return (dividends only) over 12 months. That's not a trade, that's
+ parking money.
+ Probability this is the actual outcome: 30% (based on 55% base case weight
+ with some gold movement baked in)
+ Rebuttal required from model: Show why gold MOVES to $4,800+, not stays flat.
+
+--------------------------------------------------------------------------------
+ARGUMENT 2: "Gold's March Rout Was Fundamentally Driven, Not Just Technical"
+--------------------------------------------------------------------------------
+Gold fell 15% from pre-war highs in March 2026. The narrative says "dollar
+liquidiation, panic exit, smart money will buy the dip." But the counter:
+gold fell because the Iran conflict didn't escalate as feared, risk-off
+happened fast, and dollar spiked as global money flew to safety. If the
+Iran ceasefire actually holds AND the Fed holds rates due to oil shock inflation,
+gold could retest the $3,800–4,000 range — well below the current $4,651.
+
+ Quantified impact: GDX at $3,800 gold = $61–70 (-26–32% from $94.59)
+ Probability: 20% (Bear case probability)
+ Rebuttal required from model: Show why the Iran conflict premium is sticky
+ enough that de-escalation won't fully reverse it. Show why stagflation
+ (not growth) is the more likely macro outcome.
+
+--------------------------------------------------------------------------------
+ARGUMENT 3: "The Fed Can't Cut — Oil Shock Re-Inflates Everything"
+--------------------------------------------------------------------------------
+The entire thesis depends on the Fed cutting rates in 2026, which weakens the
+dollar and drives gold higher. But Iran conflict + global oil disruption could
+re-accelerate CPI back above 4–5%. Fed's mandate is price stability. If they're
+forced to HOLD or even HIKE to combat oil-driven inflation, the dollar rallies,
+gold gets crushed, and the thesis is dead.
+
+ Quantified impact: If DXY rallies 10% (dollar strengthens), gold falls
+ ~10% proportionally. $4,651 becomes ~$4,186. GDX falls to ~$83–86 (-9–12%).
+ This doesn't even need gold to crash — just the dollar to strength.
+ Probability: 25% (based on oil shock scenario)
+ Rebuttal required from model: Show why the Fed prioritizes growth/employment
+ over inflation fighting in 2026. Show that oil shock doesn't force their hand.
+
+================================================================================
+MODEL MUST ADDRESS EACH ARGUMENT IN ITS ANALYSIS:
+- Argument 1 (no margin of safety) → addressed in Step 9 (Price Target) and
+  the explicit "honest assessment" that this is a catalyst trade, not a value trade
+- Argument 2 (March was fundamental) → addressed in Step 7 (Scenario Analysis)
+  with specific ceasefire probability and gold floor analysis
+- Argument 3 (Fed can't cut) → addressed in Step 1 (macro context) and
+  Step 7 (Fed rate path scenarios)
+================================================================================
+"""
+print(devil_advocate)
 
 gold_price = 4651.50
 usd_10yr = 0.04313

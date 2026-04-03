@@ -112,6 +112,8 @@ PT_ENTRY  = HexColor("#B8860B")
 PT_BASE   = HexColor("#2980B9")
 PT_BULL   = HexColor("#27AE60")
 PT_BEAR   = HexColor("#C0392B")
+DEVIL_BG  = HexColor("#1A1A1A")
+DEVIL_ACCENT = HexColor("#C0392B")
 
 def price_target_box():
     """Front-page price target box — prominent, honest about modest upside."""
@@ -181,6 +183,132 @@ def price_target_box():
     ]))
 
     return [label_t, row2_t, verdict_t]
+
+def devil_advocate_section():
+    """Step 0 — Devil's Advocate: three strongest quantified arguments against the thesis."""
+    items = []
+
+    # Section header
+    hdr_data = [[Paragraph(
+        "\u26a0\ufe0f  STEP 0 — DEVIL'S ADVOCATE: Three Reasons This Thesis Is Wrong",
+        ParagraphStyle('dah', fontName='Helvetica-Bold', FontSize=10, textColor=white,
+                       alignment=TA_LEFT))]]
+    hdr_t = Table(hdr_data, colWidths=[6.5*inch])
+    hdr_t.setStyle(TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), DEVIL_BG),
+        ('TOPPADDING',   (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING',(0,0), (-1,-1), 8),
+        ('LEFTPADDING',  (0,0), (-1,-1), 10),
+        ('RIGHTPADDING', (0,0), (-1,-1), 10),
+        ('BOX',          (0,0), (-1,-1), 1, DEVIL_ACCENT),
+    ]))
+    items.append(hdr_t)
+
+    args = [
+        {
+            "num": "1",
+            "title": "No Margin of Safety — You're Paying Fair Value",
+            "icon": "\u274c",
+            "body": (
+                "The DCF and NAV both say GDX at $94.59 is fairly valued at current gold ($4,651/oz). "
+                "There is ZERO margin of safety at entry. Base case 12-month target of $102\u2013107 "
+                "only represents +8\u201313% upside \u2014 barely clearing the 10% BUY threshold. "
+                "If gold simply stays flat, GDX delivers ~0\u20133% return over 12 months. That's not a trade."
+            ),
+            "impact": "Impact: $94.59 entry, flat gold \u2192 ~$94\u201396 GDX. Zero gain.",
+            "prob": "~30% probability this is the actual outcome.",
+            " rebuttal": "Model must show WHY gold MOVES to $4,800+, not stays flat.",
+            "color": DEVIL_ACCENT,
+        },
+        {
+            "num": "2",
+            "title": "March Rout Was Fundamental, Not Just Technical",
+            "icon": "\u274c",
+            "body": (
+                "Gold fell 15% from pre-war highs. The 'smart money buys the dip' narrative assumes "
+                "the dip was temporary. Counter: gold fell because Iran didn't escalate as feared, "
+                "dollar spiked, and risk-off liquidation was real. If the Iran ceasefire holds AND "
+                "the Fed holds due to oil shock inflation, gold retests $3,800\u20134,000."
+            ),
+            "impact": "Impact: Gold $3,800 \u2192 GDX $61\u201370. -26 to -32% from entry.",
+            "prob": "~20% probability (Bear case).",
+            " rebuttal": "Model must show why Iran conflict premium is sticky; why stagflation beats ceasefire scenario.",
+            "color": DEVIL_ACCENT,
+        },
+        {
+            "num": "3",
+            "title": "The Fed Can't Cut — Oil Shock Re-Inflates Everything",
+            "icon": "\u274c",
+            "body": (
+                "The entire thesis depends on the Fed cutting rates in 2026, weakening the dollar, "
+                "driving gold higher. But Iran conflict + global oil disruption could re-accelerate CPI "
+                "back above 4\u20135%. Fed mandate is price stability. If they're forced to HOLD or HIKE, "
+                "dollar rallies, gold gets crushed, thesis is dead."
+            ),
+            "impact": "Impact: DXY +10% \u2192 gold ~10% lower ($4,186). GDX falls to ~$83\u201386. -9 to -12%.",
+            "prob": "~25% probability (Fed holds scenario).",
+            " rebuttal": "Model must show why Fed prioritizes growth/employment over inflation fighting in 2026.",
+            "color": DEVIL_ACCENT,
+        },
+    ]
+
+    for arg in args:
+        arg_data = [[
+            # Left: number + icon
+            Paragraph(arg["icon"], ParagraphStyle('argicon', fontName='Helvetica-Bold', FontSize=14,
+                                                  textColor=arg["color"], alignment=TA_CENTER)),
+            # Right: title + body
+            [
+                Paragraph(f"<b>ARGUMENT {arg['num']}: {arg['title']}</b>",
+                          ParagraphStyle('argtitle', fontName='Helvetica-Bold', FontSize=9.5,
+                                         textColor=HexColor("#1A1A1A"), leading=14)),
+                Paragraph(arg["body"],
+                          ParagraphStyle('argbody', fontName='Helvetica', FontSize=8.5,
+                                         textColor=HexColor("#333333"), leading=13, spaceAfter=4)),
+                Paragraph(f"<b>{arg['impact']}</b>",
+                          ParagraphStyle('argimp', fontName='Helvetica-Bold', FontSize=8.5,
+                                         textColor=DEVIL_ACCENT, leading=12)),
+                Paragraph(f"<b>Probability:</b> {arg['prob']}",
+                          ParagraphStyle('argprob', fontName='Helvetica', FontSize=8,
+                                         textColor=GRAY, leading=12)),
+                Paragraph(f"<i>Rebuttal required:</i> {arg[' rebuttal']}",
+                          ParagraphStyle('argrebut', fontName='Helvetica-Oblique', FontSize=8,
+                                         textColor=HexColor("#555555"), leading=12)),
+            ],
+        ]]
+        arg_t = Table(arg_data, colWidths=[0.4*inch, 6.1*inch])
+        arg_t.setStyle(TableStyle([
+            ('BACKGROUND',    (0,0), (-1,-1), HexColor("#FFF5F5")),
+            ('BOX',           (0,0), (-1,-1), 0.5, DEVIL_ACCENT),
+            ('TOPPADDING',    (0,0), (-1,-1), 7),
+            ('BOTTOMPADDING', (0,0), (-1,-1), 7),
+            ('LEFTPADDING',   (0,0), (0,-1), 8),
+            ('LEFTPADDING',   (1,0), (1,-1), 8),
+            ('RIGHTPADDING',  (0,-1), (-1,-1), 8),
+            ('VALIGN',        (0,0), (0,-1), 'TOP'),
+        ]))
+        items.append(arg_t)
+        items.append(sp(0.04))
+
+    # How model addresses each
+    rebut_data = [[Paragraph(
+        "How this model addresses each argument: (1) Flat gold = thin return — addressed in Price Target section "
+        "(explicit honest assessment). (2) March was fundamental — addressed in Scenario Analysis with ceasefire "
+        "probability and gold floor analysis. (3) Fed can't cut — addressed in Macro Context with Fed rate path "
+        "scenarios and DXY sensitivity.",
+        ParagraphStyle('rebut', fontName='Helvetica-Oblique', FontSize=8, textColor=GRAY, leading=12,
+                       alignment=TA_LEFT)
+    )]]
+    rebut_t = Table(rebut_data, colWidths=[6.5*inch])
+    rebut_t.setStyle(TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), HexColor("#F5F5F5")),
+        ('BOX',           (0,0), (-1,-1), 0.5, GOLD),
+        ('TOPPADDING',   (0,0), (-1,-1), 6),
+        ('BOTTOMPADDING',(0,0), (-1,-1), 6),
+        ('LEFTPADDING',  (0,0), (-1,-1), 10),
+    ]))
+    items.append(rebut_t)
+    return items
 
 def math_box(lines):
     data = [[Paragraph(l, calc)] for l in lines]
@@ -268,6 +396,11 @@ def build_pdf():
     ))
     s.append(sp(0.05))
     for el in price_target_box():
+        s.append(el)
+    s.append(sp(0.08))
+
+    # ── STEP 0: DEVIL'S ADVOCATE ───────────────────────────────────
+    for el in devil_advocate_section():
         s.append(el)
     s.append(sp(0.12))
 
