@@ -4,6 +4,20 @@
 
 ---
 
+## Friday Selection Logic
+
+**Trigger:** User runs `/friday`
+
+**Rule:** Only ENTERED POSITIONS are eligible for Friday review — not research papers.
+
+**Selection process:**
+1. List all entered positions (from memory: Entered Positions Pool)
+2. Compare each thesis to current market data — how has the thesis changed since last week?
+3. Pick the position with the MOST thesis change (for better or worse)
+4. Build the script on that one
+
+**Research papers** (from `/thesis [idea]`) are stored in the Thesis Pool but are NOT eligible for Friday review until Sansar explicitly says he entered the position.
+
 ## Core Identity
 
 **The job:** "Here's what happened to my REAL trade, here's the proof, here's what I'm doing next."
