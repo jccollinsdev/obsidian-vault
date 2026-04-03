@@ -5,7 +5,7 @@ Last updated: 2026-04-02
 - **GDX** (VanEck Gold Miners ETF) — Bullish — Created Apr 2, 2026
   - Vault: theses/GDX_Bullish_Gold_Miners.md
   - Notion: https://www.notion.so/GDX-Gold-Miners-Bullish-Thesis-Apr-2-2026-337b951fa902811f9d34de86481f2ca8
-  - TLDR: GDX at ~$88 post-March crash is the entry. Gold at $4,769+, four converging tailwinds (stagflation, Iran conflict, oil shock, Fed cuts). Miners lever 2-3x to gold price.
+  - TLDR: GDX at ~$94.59 (real yfinance close Apr 2 2026). Gold proxy (GLD×10): $4,294/oz. Four converging tailwinds (stagflation, Iran conflict, oil shock, Fed cuts). Miners lever 2-3x to gold price. Research PDF with 7 real-data charts sent to Sansar.
 
 ## Recent Lessons (Monday content)
 — none yet —
