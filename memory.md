@@ -2,7 +2,10 @@
 Last updated: 2026-04-02
 
 ## Active Theses
-— none yet —
+- **GDX** (VanEck Gold Miners ETF) — Bullish — Created Apr 2, 2026
+  - Vault: theses/GDX_Bullish_Gold_Miners.md
+  - Notion: https://www.notion.so/GDX-Gold-Miners-Bullish-Thesis-Apr-2-2026-337b951fa902811f9d34de86481f2ca8
+  - TLDR: GDX at ~$88 post-March crash is the entry. Gold at $4,769+, four converging tailwinds (stagflation, Iran conflict, oil shock, Fed cuts). Miners lever 2-3x to gold price.
 
 ## Recent Lessons (Monday content)
 — none yet —
@@ -13,6 +16,7 @@ Last updated: 2026-04-02
 ## Pending
 - **Fri Apr 3:** Build Friday pipeline from scratch (pipeline spec + script). Same structure as Wednesday pipeline but Friday "Week in Review" format.
 - **Mon Apr 6:** Monday thesis video — Sansar will pick the stock/idea. Need a thesis brief from him first.
+- **NEW: GDX thesis delivered to Sansar — awaiting feedback/approval to proceed to script
 
 ## Script Formatting Rules (locked in Apr 2, 2026)
 - Section labels: NO numbers — use [SECTION: TOPIC NAME] not [SECTION: 1 — TOPIC NAME]
