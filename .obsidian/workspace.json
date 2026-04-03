@@ -179,6 +179,7 @@
   },
   "active": "22b587aeab36dfae",
   "lastOpenFiles": [
+    "scripts/gdx_consistency_check.py",
     "scripts/gdx_model.py",
     "scripts/sedIyU7Bj",
     "theses/charts/top_holders_detail.png",
@@ -200,7 +201,6 @@
     "scripts/create_notion_thesis.py",
     "theses/GDX_Bullish_Gold_Miners.md",
     "theses/active/GDX_Thesis_20260402_research.json",
-    "theses/active/GDX_Thesis_20260402.pdf",
     "content pipeline.md",
     "scripts/pipeline/remotion-video/node_modules/source-map/README.md",
     "scripts/pipeline/WEDNESDAY_PIPELINE.md",
