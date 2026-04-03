@@ -20,8 +20,8 @@ TEXT    = HexColor("#1A1A1A"); GRAY       = HexColor("#777777")
 GREEN   = HexColor("#27AE60"); RED        = HexColor("#C0392B")
 BLUE    = HexColor("#2980B9")
 
-GOLD_CURRENT = 4294  # GLD ($429.41)×10 yfinance Apr 2 2026
-GDX_CURRENT  = 96.01  # GDX close yfinance Apr 2 2026
+GOLD_CURRENT = 4651  # Gold spot Apr 3 2026 (yfinance GC=F)
+GDX_CURRENT  = 94.59  # GDX close yfinance Apr 2 2026
 
 def img(name, width=6.5*inch):
     path = f"{CHARTS_DIR}/{name}"
@@ -107,6 +107,81 @@ def callout(text, bg=DARK_BG, tc=white):
     ]))
     return t
 
+PT_GOLD   = HexColor("#1A1A1A")
+PT_ENTRY  = HexColor("#B8860B")
+PT_BASE   = HexColor("#2980B9")
+PT_BULL   = HexColor("#27AE60")
+PT_BEAR   = HexColor("#C0392B")
+
+def price_target_box():
+    """Front-page price target box — prominent, honest about modest upside."""
+    # Row 1: label
+    label_data = [[Paragraph("PRICE TARGETS — GDX (VanEck Gold Miners ETF)",
+                              ParagraphStyle('ptl', fontName='Helvetica-Bold', FontSize=10,
+                                             textColor=GOLD, alignment=TA_CENTER))]]
+    label_t = Table(label_data, colWidths=[6.5*inch])
+    label_t.setStyle(TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), DARK_BG),
+        ('TOPPADDING',    (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING',   (0,0), (-1,-1), 0),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 0),
+    ]))
+
+    # Row 2: numbers
+    def pt_cell(label, price, pct, color, note=''):
+        lines = [
+            Paragraph(label, ParagraphStyle('ptl2', fontName='Helvetica', FontSize=7.5,
+                                              textColor=GRAY, alignment=TA_CENTER)),
+            Paragraph(price, ParagraphStyle('ptp', fontName='Helvetica-Bold', FontSize=20,
+                                            textColor=color, alignment=TA_CENTER, leading=24)),
+            Paragraph(pct, ParagraphStyle('ptp2', fontName='Helvetica-Bold', FontSize=9.5,
+                                          textColor=color, alignment=TA_CENTER)),
+        ]
+        if note:
+            lines.append(Paragraph(note, ParagraphStyle('ptn', fontName='Helvetica-Oblique',
+                                                        FontSize=7, textColor=GRAY, alignment=TA_CENTER)))
+        return lines
+
+    row2_data = [[
+        pt_cell("ENTRY (Apr 2)", "$94.59", "CURRENT", GOLD, "yfinance close"),
+        pt_cell("BASE CASE (12 MO)", "$102–107", "+8–13%", PT_BASE, "if gold hits $4,800"),
+        pt_cell("BULL CASE", "$120–130", "+27–37%", PT_BULL, "if gold hits $5,500"),
+        pt_cell("BEAR CASE", "$61–70", "−26–32%", PT_BEAR, "if gold drops to $3,800"),
+    ]]
+    row2_t = Table(row2_data, colWidths=[1.625*inch]*4)
+    row2_t.setStyle(TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), HexColor("#F8F8F8")),
+        ('BOX',           (0,0), (-1,-1), 1, GOLD),
+        ('INNERGRID',     (0,0), (-1,-1), 0.5, GOLD),
+        ('TOPPADDING',    (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING',   (0,0), (-1,-1), 4),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 4),
+        ('VALIGN',        (0,0), (-1,-1), 'MIDDLE'),
+    ]))
+
+    # Row 3: verdict callout
+    verdict_data = [[Paragraph(
+        "\u26a0\ufe0f  At current gold (~$4,651/oz), GDX is <b>fairly valued</b> — not cheap. "
+        "The BUY is a <b>12-month catalyst trade</b>: need gold to reach $4,800+ to hit our base target. "
+        "If all four catalysts materialize (Fed cuts + stagflation + Iran conflict + oil shock), "
+        "the bull case gets you +27\u201337%. The asymmetric bet is to the upside.",
+        ParagraphStyle('pv', fontName='Helvetica', FontSize=8.5,
+                        textColor=HexColor("#1A1A1A"), leading=13, alignment=TA_CENTER)
+    )]]
+    verdict_t = Table(verdict_data, colWidths=[6.5*inch])
+    verdict_t.setStyle(TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), HexColor("#FFF8E7")),
+        ('TOPPADDING',    (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING',   (0,0), (-1,-1), 10),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 10),
+        ('BOX',           (0,0), (-1,-1), 0.5, GOLD),
+    ]))
+
+    return [label_t, row2_t, verdict_t]
+
 def math_box(lines):
     data = [[Paragraph(l, calc)] for l in lines]
     t = Table(data, colWidths=[6.5*inch])
@@ -184,12 +259,16 @@ def build_pdf():
 
     # ── TLDR ──────────────────────────────────────────────────────────
     s.append(callout(
-        "<b>TLDR:</b>  GDX at <b>$96.01</b> (real yfinance close Apr 2, 2026) is the leveraged play on a gold bull "
+        "<b>TLDR:</b>  GDX at <b>$94.59</b> (yfinance close Apr 2, 2026) is the leveraged play on a gold bull "
         "market driven by four forces hitting at once: <b>stagflation</b>, <b>active Middle East conflict</b>, "
-        "<b>oil-driven inflation shock</b>, and a <b>Fed about to cut rates</b>. Gold proxy (GLD×10) at <b>$4,294/oz</b>. "
+        "<b>oil-driven inflation shock</b>, and a <b>Fed about to cut rates</b>. Gold at <b>$4,651/oz</b>. "
         "Miners lever 2–3×. Real institutional data shows 72–85% institutionally owned. "
-        "Central banks buying at record pace (1,084 tonnes in 2025). The math and data below tell the story."
+        "Central banks buying at record pace (1,084 tonnes in 2025). "
+        "<b>BUY as a 12-month catalyst trade</b> — not a current re-rate. Target $102–107 (+8–13%)."
     ))
+    s.append(sp(0.05))
+    for el in price_target_box():
+        s.append(el)
     s.append(sp(0.12))
 
     # ════════════════════════════════════════════════════════════════

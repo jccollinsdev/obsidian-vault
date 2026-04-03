@@ -28,8 +28,9 @@
 — none yet —
 
 ## Pending
-- **Mon Apr 6:** Monday thesis video — Sansar will pick the stock/idea. Need a thesis brief from him first.
+- **Mon Apr 6:** Monday thesis video -- Sansar will pick the stock/idea. Need a thesis brief from him first.
 - **Fri Apr 3:** Friday "Week in Review" pipeline + script still to build
+- **Apr 3 PM:** Sansar requested full internal thesis generation prompt/pipeline documentation -- to be shared with him
 
 ## Script Formatting Rules (locked in Apr 2, 2026)
 - Section labels: NO numbers — use [SECTION: TOPIC NAME] not [SECTION: 1 — TOPIC NAME]

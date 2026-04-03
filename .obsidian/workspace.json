@@ -179,6 +179,8 @@
   },
   "active": "22b587aeab36dfae",
   "lastOpenFiles": [
+    "scripts/monday/question_bank.md",
+    "scripts/pipeline/MONDAY_PIPELINE.md",
     "scripts/pipeline/THESIS_PIPELINE.md",
     "scripts/gdx_consistency_check.py",
     "scripts/gdx_model.py",
