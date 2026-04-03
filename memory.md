@@ -1,11 +1,11 @@
 # Josiah Memory
-Last updated: 2026-04-02
+Last updated: 2026-04-03
 
 ## Active Theses
-- **GDX** (VanEck Gold Miners ETF) — Bullish — Created Apr 2, 2026
-  - Vault: theses/GDX_Bullish_Gold_Miners.md
-  - Notion: https://www.notion.so/GDX-Gold-Miners-Bullish-Thesis-Apr-2-2026-337b951fa902811f9d34de86481f2ca8
-  - TLDR: GDX at ~$94.59 (real yfinance close Apr 2 2026). Gold proxy (GLD×10): $4,294/oz. Four converging tailwinds (stagflation, Iran conflict, oil shock, Fed cuts). Miners lever 2-3x to gold price. Research PDF with 7 real-data charts sent to Sansar.
+- **GDX** (VanEck Gold Miners ETF) — Bullish — Rebuilt Apr 3, 2026 with institutional-grade model
+  - Vault: theses/GDX_Bullish_Gold_Miners.md (completely rebuilt)
+  - TLDR: GDX at $94.59 (yfinance Apr 3 2026, gold $4,651/oz). Full tier-1 institutional model: QoE check, DCF (base $4,800 gold → NEM $155 implied), NAV model, trading comps, sensitivity table, scenario analysis, risk matrix. BUY $105–110 target (+11–16%). Key risk: gold breaks below $4,500.
+  - Model script: scripts/gdx_model.py (runs live yfinance pull + all 9 model steps)
 
 ## Recent Lessons (Monday content)
 — none yet —
@@ -14,9 +14,8 @@ Last updated: 2026-04-02
 — none yet —
 
 ## Pending
-- **Fri Apr 3:** Build Friday pipeline from scratch (pipeline spec + script). Same structure as Wednesday pipeline but Friday "Week in Review" format.
 - **Mon Apr 6:** Monday thesis video — Sansar will pick the stock/idea. Need a thesis brief from him first.
-- **NEW: GDX thesis delivered to Sansar — awaiting feedback/approval to proceed to script
+- **Fri Apr 3:** Friday "Week in Review" pipeline + script still to build
 
 ## Script Formatting Rules (locked in Apr 2, 2026)
 - Section labels: NO numbers — use [SECTION: TOPIC NAME] not [SECTION: 1 — TOPIC NAME]
