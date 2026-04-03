@@ -86,3 +86,27 @@ All thesis outputs must follow these rules (also in THESIS_PIPELINE.md):
 - [[pipeline/Josiah_System_Prompt]] — my identity and rules
 - [[scripts/pipeline/WEDNESDAY_PIPELINE]] — Wednesday workflow
 - [[scripts/wednesday/2026-04-02_midweek_recap]] — today's script
+
+## Pipeline Clarification — Research vs. Positions (Apr 3, 2026)
+
+**Research Papers:** `/thesis [idea]` → I build the thesis. It's a research paper. Sansar reads it. He may or may not enter.
+
+**Entered Positions:** Only when Sansar explicitly says "OK, I followed through and I entered the position" does it become a live trade tracked for Friday review.
+
+**Friday Proof of Knowledge workflow (UPDATED):**
+1. List all ENTERED POSITIONS (not research papers)
+2. Check how each thesis has changed since last Friday — for better or worse
+3. Pick the thesis with the MOST change that week
+4. Build the Friday script on that one
+5. Send script to Sansar
+
+**Current state:**
+- GDX thesis v2: RESEARCH PAPER (not entered)
+- No entered positions this week → no Friday video
+
+## Thesis Pool (Research Papers — not entered)
+- GDX (VanEck Gold Miners ETF) — Bullish — Apr 2, 2026 — RESEARCH ONLY, NOT ENTERED
+
+## Entered Positions Pool (tracked for Friday review)
+— empty —
+
