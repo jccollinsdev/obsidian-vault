@@ -49,7 +49,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "content pipeline",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -177,13 +177,34 @@
       "bases:Create new base": false
     }
   },
-  "active": "aa235814fc7a8796",
+  "active": "22b587aeab36dfae",
   "lastOpenFiles": [
+    "scripts/gdx_model.py",
+    "scripts/sedIyU7Bj",
+    "theses/charts/top_holders_detail.png",
+    "theses/charts/institutional_holdings.png",
+    "scripts/thesis_extra_charts.py",
+    "theses/charts/miner_fundamentals.png",
+    "theses/charts/central_bank_gold.png",
+    "theses/charts/edgar_13f_filings.png",
+    "theses/charts/dxy_gold_correlation.png",
+    "theses/charts/gdx_gold_correlation.png",
+    "theses/GDX_Bullish_Gold_Miners_Research.pdf",
+    "theses/charts/valuation_matrix.png",
+    "theses/charts/real_rates_gold.png",
+    "theses/charts/historical_gdx_gold.png",
+    "theses/charts",
+    "scripts/thesis_charts.py",
+    "theses/GDX_Bullish_Gold_Miners.pdf",
+    "scripts/thesis_to_pdf.py",
+    "scripts/create_notion_thesis.py",
+    "theses/GDX_Bullish_Gold_Miners.md",
+    "theses/active/GDX_Thesis_20260402_research.json",
+    "theses/active/GDX_Thesis_20260402.pdf",
     "content pipeline.md",
     "scripts/pipeline/remotion-video/node_modules/source-map/README.md",
     "scripts/pipeline/WEDNESDAY_PIPELINE.md",
     "2026-04-02.md",
-    "Untitled.base",
     "Untitled.canvas",
     "scripts/pipeline/remotion-video/node_modules/acorn/CHANGELOG.md"
   ]
