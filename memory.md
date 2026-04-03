@@ -1,11 +1,12 @@
 # Josiah Memory
-Last updated: 2026-04-03
+Last updated: 2026-04-03 [note: memory updated mid-session, skip redundant read]
 
 ## Active Theses
-- **GDX** (VanEck Gold Miners ETF) — Bullish — Rebuilt Apr 3, 2026 with institutional-grade model
-  - Vault: theses/GDX_Bullish_Gold_Miners.md (completely rebuilt)
-  - TLDR: GDX at $94.59 (yfinance Apr 3 2026, gold $4,651/oz). Full tier-1 institutional model: QoE check, DCF (base $4,800 gold → NEM $155 implied), NAV model, trading comps, sensitivity table, scenario analysis, risk matrix. BUY $105–110 target (+11–16%). Key risk: gold breaks below $4,500.
-  - Model script: scripts/gdx_model.py (runs live yfinance pull + all 9 model steps)
+- **GDX** (VanEck Gold Miners ETF) — Bullish (v2, consistency-corrected) — Rebuilt Apr 3, 2026
+  - Vault: theses/GDX_Bullish_Gold_Miners.md (honest BUY call)
+  - Key finding: GDX at $94.59 is FAIR VALUE at current gold $4,651. Not undervalued now. BUY is a 12-month catalyst trade: target $102–107 if gold reaches $4,800 (+8–13% upside). Bull case $5,500 → $120–130 (+27–37%).
+  - Scripts: scripts/gdx_model.py (all 9 model steps), scripts/gdx_consistency_check.py (consistency verification)
+  - CONSISTENCY ISSUES FOUND: Original scenario targets were hardcoded wrong. BUY threshold check showed only 2.2% upside at current gold (not 10%+). All reconciled in v2.
 
 ## Recent Lessons (Monday content)
 — none yet —
