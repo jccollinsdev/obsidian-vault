@@ -80,6 +80,7 @@ All thesis outputs must follow these rules (also in THESIS_PIPELINE.md):
 - Full vault folder structure created and committed
 - Script delivery workflow set up Apr 2, 2026
 - Thesis calibration (conservative/harsh) locked in Apr 3, 2026
+- sudo password updated: Biratnagar1! (saved Apr 3, 2026)
 
 ## Vault Structure
 - [[README]] — vault entry point
