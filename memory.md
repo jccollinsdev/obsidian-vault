@@ -7,8 +7,9 @@ Last updated: 2026-04-07
 - Vault: https://github.com/jccollinsdev/obsidian-vault
 - Integrations preserved (Gmail, Notion, GitHub, etc.)
 
-## Notes
-- Fresh start initiated by Sansar on April 7, 2026
-- All content creation files and prior memory wiped per Sansar's request
+## Session Summary — Apr 7 2026
+- Sansar initiated factory reset via /new
+- All content creation files wiped (videos, theses, scripts, pipeline)
+- Memory wiped fresh
 - Integrations and tooling remain intact
-- Awaiting new direction from Sansar
+- Direction TBD — Sansar is pivoting away from content creation
